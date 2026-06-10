@@ -27,3 +27,14 @@
 
 # Jupyter notebook
 *.ipynb  text eol=lf
+
+# Shell scripts — must be LF on Linux servers
+*.sh     text eol=lf
+
+# JSON configs
+*.json   text eol=lf
+
+# Binary model files
+*.bin    binary
+*.safetensors binary
+*.ckpt   binary
