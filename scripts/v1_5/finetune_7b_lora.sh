@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# LLaVA-v1.5-7B Visual Instruction Tuning (Stage 2)
+# LLaVA-v1.5-7B LoRA Visual Instruction Tuning (Stage 2)
 # 8x RTX 4090 48GB
+# LoRA 只训练低秩适配器 (~1% 参数)，显存需求大幅降低
 # Global batch size = per_device_train_batch_size x gradient_accumulation_steps x num_gpus
 #                   = 16 x 1 x 8 = 128
 
-# train_mem.py enables FlashAttention2 (memory-efficient, required for 48GB GPUs)
 deepspeed llava/train/train_mem.py \
+    --lora_enable True --lora_r 128 --lora_alpha 256 --mm_projector_lr 2e-5 \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path lmsys/vicuna-7b-v1.5 \
     --version v1 \
@@ -21,23 +22,23 @@ deepspeed llava/train/train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir ./checkpoints/llava-v1.5-7b \
+    --output_dir ./checkpoints/llava-v1.5-7b-lora \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 4 \
+    --per_device_train_batch_size 16 \
     --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 4 \
+    --gradient_accumulation_steps 1 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 50000 \
     --save_total_limit 1 \
-    --learning_rate 2e-5 \
+    --learning_rate 2e-4 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
     --logging_steps 1 \
     --tf32 True \
     --model_max_length 2048 \
-    --gradient_checkpointing False \
+    --gradient_checkpointing True \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb
