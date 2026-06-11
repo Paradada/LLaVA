@@ -5,7 +5,8 @@
 # Global batch size = per_device_train_batch_size x gradient_accumulation_steps x num_gpus
 #                   = 16 x 1 x 8 = 128
 
-deepspeed llava/train/train_mem.py \
+# Use train.py (no flash_attn_2) instead of train_mem.py if flash-attn 2.x is unavailable
+deepspeed llava/train/train.py \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path lmsys/vicuna-7b-v1.5 \
     --version v1 \
