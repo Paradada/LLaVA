@@ -5,8 +5,8 @@
 # Global batch size = per_device_train_batch_size x gradient_accumulation_steps x num_gpus
 #                   = 16 x 1 x 8 = 128
 
-# Use train.py (no flash_attn_2) instead of train_mem.py if flash-attn 2.x is unavailable
-deepspeed llava/train/train.py \
+# train_mem.py enables FlashAttention2 (memory-efficient, required for 48GB GPUs)
+deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path lmsys/vicuna-7b-v1.5 \
     --version v1 \
@@ -23,9 +23,9 @@ deepspeed llava/train/train.py \
     --bf16 True \
     --output_dir ./checkpoints/llava-v1.5-7b \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 16 \
+    --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 1 \
+    --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 50000 \
