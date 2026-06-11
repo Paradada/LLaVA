@@ -147,9 +147,9 @@ export NCCL_IB_DISABLE=1
 export NCCL_DEBUG=INFO   # 如需诊断
 ```
 
-### 如果要跑 13B LoRA
+### 断点续训
 
-将脚本中 `vicuna-7b-v1.5` 换为 `vicuna-13b-v1.5`，projector 对应换成 13B 版本即可。
+脚本自动检测 `checkpoint-*` 目录，中断后直接重新运行即可恢复。
 
 ---
 
