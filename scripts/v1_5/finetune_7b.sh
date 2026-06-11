@@ -7,7 +7,7 @@
 
 # Use train.py (no flash_attn_2) instead of train_mem.py if flash-attn 2.x is unavailable
 deepspeed llava/train/train.py \
-    --deepspeed ./scripts/zero3.json \
+    --deepspeed ./scripts/zero2.json \
     --model_name_or_path lmsys/vicuna-7b-v1.5 \
     --version v1 \
     --data_path ./playground/data/llava_v1_5_mix665k.json \
