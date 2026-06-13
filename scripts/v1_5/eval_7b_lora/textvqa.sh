@@ -15,13 +15,13 @@ if [ ! -d "./playground/data/eval/textvqa/train_images" ] || [ "$(ls -A ./playgr
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora"
-MODEL_BASE="lmsys/vicuna-7b-v1.5"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+# (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 
 python -m llava.eval.model_vqa_loader \
     --model-path "$MODEL_PATH" \
-    --model-base "$MODEL_BASE" \
+      \
     --question-file ./playground/data/eval/textvqa/llava_textvqa_val_v051_ocr.jsonl \
     --image-folder ./playground/data/eval/textvqa/train_images \
     --answers-file ./playground/data/eval/textvqa/answers/$CKPT.jsonl \

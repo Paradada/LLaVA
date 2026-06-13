@@ -12,13 +12,13 @@ if [ ! -d "$LB_DIR/images" ] || [ "$(ls -A $LB_DIR/images 2>/dev/null | wc -l)" 
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora"
-MODEL_BASE="lmsys/vicuna-7b-v1.5"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+# (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 
 python -m llava.eval.model_vqa \
     --model-path "$MODEL_PATH" \
-    --model-base "$MODEL_BASE" \
+      \
     --question-file ./playground/data/eval/llava-bench-in-the-wild/questions.jsonl \
     --image-folder ./playground/data/eval/llava-bench-in-the-wild/images \
     --answers-file ./playground/data/eval/llava-bench-in-the-wild/answers/$CKPT.jsonl \

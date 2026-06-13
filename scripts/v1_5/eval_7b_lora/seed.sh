@@ -13,13 +13,13 @@ IFS=',' read -ra GPULIST <<< "$gpu_list"
 CHUNKS=${#GPULIST[@]}
 
 CKPT="llava-v1.5-7b-lora"
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora"
-MODEL_BASE="lmsys/vicuna-7b-v1.5"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+# (merged model, no base needed)
 
 for IDX in $(seq 0 $((CHUNKS-1))); do
     CUDA_VISIBLE_DEVICES=${GPULIST[$IDX]} python -m llava.eval.model_vqa_loader \
         --model-path "$MODEL_PATH" \
-        --model-base "$MODEL_BASE" \
+          \
         --question-file ./playground/data/eval/seed_bench/llava-seed-bench.jsonl \
         --image-folder ./playground/data/eval/seed_bench \
         --answers-file ./playground/data/eval/seed_bench/answers/$CKPT/${CHUNKS}_${IDX}.jsonl \

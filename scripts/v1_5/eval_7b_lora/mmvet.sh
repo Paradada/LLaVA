@@ -7,13 +7,13 @@ if [ ! -d "./playground/data/eval/mm-vet/images" ] || [ "$(ls -A ./playground/da
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora"
-MODEL_BASE="lmsys/vicuna-7b-v1.5"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+# (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 
 python -m llava.eval.model_vqa \
     --model-path "$MODEL_PATH" \
-    --model-base "$MODEL_BASE" \
+      \
     --question-file ./playground/data/eval/mm-vet/llava-mm-vet.jsonl \
     --image-folder ./playground/data/eval/mm-vet/images \
     --answers-file ./playground/data/eval/mm-vet/answers/$CKPT.jsonl \
