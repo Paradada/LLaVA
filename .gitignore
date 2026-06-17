@@ -38,3 +38,9 @@ serve_images/
 # images
 *.jpg
 *.zip
+
+# eval
+/home/lgq/data/LLaVA/playground/data/
+/home/lgq/data/LLaVA/lmsys/
+/home/lgq/data/LLaVA/checkpoints
+playground/data/eval/

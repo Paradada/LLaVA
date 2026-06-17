@@ -105,7 +105,7 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/pope.sh
 CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/textvqa.sh
 ```
 
-### 3.3 MME ⭐ 本地出分
+### 3.3 MME ⭐ 本地出分(to be continued)
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mme.sh
@@ -123,7 +123,7 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/sqa.sh
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/gqa.sh
 ```
 
-### 3.6 SEED-Bench ⭐ 本地出分（多卡）
+### 3.6 SEED-Bench ⭐ 本地出分（多卡）(to be continued)
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/seed.sh

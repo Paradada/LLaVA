@@ -109,9 +109,9 @@ bash scripts/v1_5/finetune_7b_lora.sh
 
 ```bash
 python scripts/merge_lora_weights.py \
-    --model-path ./checkpoints/llava-v1.5-7b-lora \
+    --model-path ./checkpoints/llava-v1.5-7b-lora-8-20260614 \
     --model-base lmsys/vicuna-7b-v1.5 \
-    --save-model-path ./checkpoints/llava-v1.5-7b-merged
+    --save-model-path ./checkpoints/llava-v1.5-7b-lora-8-20260614-merged
 ```
 
 ### 不合并直接推理
