@@ -93,31 +93,31 @@ export HF_ENDPOINT=https://hf-mirror.com
 
 > 每个评估脚本都自带数据完整性检查，缺数据会直接报错提示。
 
-### 3.1 POPE ⭐ 本地出分（推荐第一个跑）
+### 3.1 POPE ⭐ 本地出分（推荐第一个跑） 1
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/pope.sh
 ```
 
-### 3.2 TextVQA ⭐ 本地出分
+### 3.2 TextVQA ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/textvqa.sh
+CUDA_VISIBLE_DEVICES=1 bash scripts/v1_5/eval_7b_lora/textvqa.sh
 ```
 
-### 3.3 MME ⭐ 本地出分(to be continued)
+### 3.3 MME ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mme.sh
+CUDA_VISIBLE_DEVICES=2 bash scripts/v1_5/eval_7b_lora/mme.sh
 ```
 
-### 3.4 ScienceQA ⭐ 本地出分
+### 3.4 ScienceQA ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/sqa.sh
+CUDA_VISIBLE_DEVICES=3 bash scripts/v1_5/eval_7b_lora/sqa.sh
 ```
 
-### 3.5 GQA ⭐ 本地出分（多卡）
+### 3.5 GQA ⭐ 本地出分（多卡） 1
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/gqa.sh
@@ -129,25 +129,25 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/gqa.sh
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/seed.sh
 ```
 
-### 3.7 VQAv2（多卡 → 在线提交）
+### 3.7 VQAv2（多卡 → 在线提交） 1
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/vqav2.sh
 # 提交到: https://eval.ai/web/challenges/challenge-page/830/my-submission
 ```
 
-### 3.8 VisWiz（单卡 → 在线提交）
+### 3.8 VisWiz（单卡 → 在线提交） 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/vizwiz.sh
+CUDA_VISIBLE_DEVICES=3 bash scripts/v1_5/eval_7b_lora/vizwiz.sh
 # 提交到: https://eval.ai/web/challenges/challenge-page/2185/my-submission
 ```
 
-### 3.9 MMBench / MMBench-CN（单卡 → 在线提交）
+### 3.9 MMBench / MMBench-CN（单卡 → 在线提交） 12
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmbench.sh
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmbench_cn.sh
+CUDA_VISIBLE_DEVICES=2 bash scripts/v1_5/eval_7b_lora/mmbench_cn.sh
 # 提交到: https://opencompass.org.cn/leaderboard-multimodal
 ```
 
@@ -157,7 +157,7 @@ CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmbench_cn.sh
 OPENAI_API_KEY="sk-****" bash scripts/v1_5/eval_7b_lora/llavabench.sh
 ```
 
-### 3.11 MM-Vet（Jupyter 打分）
+### 3.11 MM-Vet（Jupyter 打分） 1
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmvet.sh

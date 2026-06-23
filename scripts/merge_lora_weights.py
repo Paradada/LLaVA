@@ -9,9 +9,6 @@ def merge_lora(args):
 
     model.save_pretrained(args.save_model_path)
     tokenizer.save_pretrained(args.save_model_path)
-    model.generation_config.temperature = None
-    model.generation_config.top_p = None
-    model.generation_config.do_sample = True
 
 
 if __name__ == "__main__":

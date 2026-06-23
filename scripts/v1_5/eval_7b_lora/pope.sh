@@ -11,7 +11,7 @@ if [ ! -d "./playground/data/eval/pope/val2014" ] || [ "$(ls -A ./playground/dat
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 
