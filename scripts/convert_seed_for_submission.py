@@ -67,7 +67,11 @@ if __name__ == "__main__":
             if qid in results:
                 result = results[qid]
             else:
-                result = results[int(qid)]
+                qid = str(qid).strip()  # 确保是字符串
+                try:
+                    result = results[int(qid)]
+                except (ValueError, KeyError):
+                    result = results.get(qid) or results.get(str(qid))
             fp.write(json.dumps({
                 'question_id': qid,
                 'prediction': result['text']

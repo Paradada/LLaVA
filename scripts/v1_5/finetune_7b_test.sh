@@ -74,4 +74,6 @@ deepspeed llava/train/train_mem.py \
     --gradient_checkpointing True \
     --dataloader_num_workers 2 \
     --lazy_preprocess True \
-    --report_to none
+    --report_to wandb \
+    --run_name "7b-lora-2x4090-repeat-v1" \ 
+    --wandb_project "llava-1.5-0624" 

@@ -15,7 +15,7 @@ if [ ! -d "./playground/data/eval/textvqa/train_images" ] || [ "$(ls -A ./playgr
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-official-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 

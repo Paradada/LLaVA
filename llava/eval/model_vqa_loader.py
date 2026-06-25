@@ -36,26 +36,85 @@ class CustomDataset(Dataset):
         self.image_processor = image_processor
         self.model_config = model_config
 
+    # def __getitem__(self, index):
+    #     line = self.questions[index]
+    #     image_file = line["image"]
+    #     qs = line["text"]
+    #     if self.model_config.mm_use_im_start_end:
+    #         qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + '\n' + qs
+    #     else:
+    #         qs = DEFAULT_IMAGE_TOKEN + '\n' + qs
+
+    #     conv = conv_templates[args.conv_mode].copy()
+    #     conv.append_message(conv.roles[0], qs)
+    #     conv.append_message(conv.roles[1], None)
+    #     prompt = conv.get_prompt()
+
+    #     image = Image.open(os.path.join(self.image_folder, image_file)).convert('RGB')
+    #     image_tensor = process_images([image], self.image_processor, self.model_config)[0]
+
+    #     input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt')
+
+    #     return input_ids, image_tensor, image.size
+
     def __getitem__(self, index):
         line = self.questions[index]
-        image_file = line["image"]
         qs = line["text"]
-        if self.model_config.mm_use_im_start_end:
-            qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN + '\n' + qs
+        
+        images = []
+        q_type = line.get("question_type_id") or line.get("task_type_id")
+        qid = line.get("question_id")
+        
+        if q_type in [10, 11, 12] or str(q_type) in ["10", "11", "12"]:
+            print(f"[DEBUG] Video question - qid: {qid}, q_type: {q_type}")  # 调试用
+            
+            base_dir = os.path.join(self.image_folder, "SEED-Bench-video-image", "v1_video")
+            task_map = {
+                10: "ssv2_8_frame",
+                11: "kitchen_8_frame",
+                12: "breakfast_8_frame"
+            }
+            subdir = task_map.get(int(q_type))
+            
+            if subdir:
+                frame_dir = os.path.join(base_dir, f"task{q_type}", subdir, str(qid))
+                print(f"[DEBUG] Looking for frames in: {frame_dir}")  # 关键调试
+                
+                for i in range(1, 9):
+                    frame_path = os.path.join(frame_dir, f"{i}.png")
+                    if os.path.exists(frame_path):
+                        images.append(Image.open(frame_path).convert('RGB'))
+                    # else:
+                    #     print(f"[Warning] Missing {frame_path}")  # 可临时打开
+                
         else:
-            qs = DEFAULT_IMAGE_TOKEN + '\n' + qs
+            # 普通图像
+            image_file = line["image"]
+            image_path = os.path.join(self.image_folder, image_file)
+            if os.path.exists(image_path):
+                images.append(Image.open(image_path).convert('RGB'))
+        
+        if not images:
+            print(f"[ERROR] No images found for qid: {qid} (type {q_type}). Checked dir: {frame_dir if 'frame_dir' in locals() else 'N/A'}")
+            raise ValueError(f"No images found for question_id: {qid}")
+        
+        # 后续代码不变（多帧提示词 + 处理）
+        num_images = len(images)
+        if self.model_config.mm_use_im_start_end:
+            qs = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN * num_images + DEFAULT_IM_END_TOKEN + '\n' + qs
+        else:
+            qs = DEFAULT_IMAGE_TOKEN * num_images + '\n' + qs
 
         conv = conv_templates[args.conv_mode].copy()
         conv.append_message(conv.roles[0], qs)
         conv.append_message(conv.roles[1], None)
         prompt = conv.get_prompt()
 
-        image = Image.open(os.path.join(self.image_folder, image_file)).convert('RGB')
-        image_tensor = process_images([image], self.image_processor, self.model_config)[0]
-
+        image_tensor = process_images(images, self.image_processor, self.model_config)[0]
         input_ids = tokenizer_image_token(prompt, self.tokenizer, IMAGE_TOKEN_INDEX, return_tensors='pt')
-
-        return input_ids, image_tensor, image.size
+        
+        image_sizes = [img.size for img in images]
+        return input_ids, image_tensor, image_sizes
 
     def __len__(self):
         return len(self.questions)
