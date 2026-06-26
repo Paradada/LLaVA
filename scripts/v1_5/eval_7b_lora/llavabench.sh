@@ -12,7 +12,8 @@ if [ ! -d "$LB_DIR/images" ] || [ "$(ls -A $LB_DIR/images 2>/dev/null | wc -l)" 
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-merged"
+
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260624-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 

@@ -8,7 +8,7 @@ if [ ! -f "./playground/data/eval/mmbench/$SPLIT.tsv" ]; then
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260624-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 SPLIT="mmbench_dev_20230712"

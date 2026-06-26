@@ -10,8 +10,7 @@ if [ ! -d "./playground/data/eval/pope/val2014" ] || [ "$(ls -A ./playground/dat
     echo "[ERROR] pope/val2014 images missing. Run: bash scripts/v1_5/download_eval_data.sh"
     exit 1
 fi
-
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260624-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 

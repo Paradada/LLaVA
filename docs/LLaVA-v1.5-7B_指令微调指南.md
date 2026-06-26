@@ -1,7 +1,7 @@
 # LLaVA-v1.5-7B LoRA 指令微调 (Stage 2) — 完整操作指南
 
 > **适用硬件**: 8x RTX 4090 48GB
-> **训练方式**: LoRA 低秩适配 + DeepSpeed ZeRO-2
+> **训练方式**: LoRA 低秩适配 + DeepSpeed ZeRO-3
 > **预计耗时**: ~8-10 小时
 > **可训参数**: ~1% (LoRA 适配器 + mm_projector)
 
@@ -109,9 +109,9 @@ bash scripts/v1_5/finetune_7b_lora.sh
 
 ```bash
 python scripts/merge_lora_weights.py \
-    --model-path ./checkpoints/llava-v1.5-7b-lora-8-20260614 \
+    --model-path ./checkpoints/llava-v1.5-7b-lora-8-20260624 \
     --model-base lmsys/vicuna-7b-v1.5 \
-    --save-model-path ./checkpoints/llava-v1.5-7b-lora-8-20260614-merged
+    --save-model-path ./checkpoints/llava-v1.5-7b-lora-8-20260624-merged
 ```
 
 ### 不合并直接推理

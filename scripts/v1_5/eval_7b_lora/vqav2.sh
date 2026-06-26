@@ -13,7 +13,8 @@ IFS=',' read -ra GPULIST <<< "$gpu_list"
 CHUNKS=${#GPULIST[@]}
 
 CKPT="llava-v1.5-7b-lora"
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
+
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260624-merged"
 # (merged model, no base needed)
 SPLIT="llava_vqav2_mscoco_test-dev2015"
 

@@ -8,7 +8,7 @@ if [ ! -f "./playground/data/eval/mmbench/$SPLIT.tsv" ]; then
     exit 1
 fi
 
-MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260614-merged"
+MODEL_PATH="./checkpoints/llava-v1.5-7b-lora-8-20260624-merged"
 # (merged model, no base needed)
 CKPT="llava-v1.5-7b-lora"
 SPLIT="mmbench_dev_cn_20231003"
@@ -18,6 +18,7 @@ python -m llava.eval.model_vqa_mmbench \
       \
     --question-file ./playground/data/eval/mmbench/$SPLIT.tsv \
     --answers-file ./playground/data/eval/mmbench/answers/$SPLIT/$CKPT.jsonl \
+    --lang cn \
     --single-pred-prompt \
     --temperature 0 \
     --conv-mode vicuna_v1

@@ -96,25 +96,25 @@ export HF_ENDPOINT=https://hf-mirror.com
 ### 3.1 POPE ⭐ 本地出分（推荐第一个跑） 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/pope.sh
+CUDA_VISIBLE_DEVICES=7 bash scripts/v1_5/eval_7b_lora/pope.sh
 ```
 
 ### 3.2 TextVQA ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=1 bash scripts/v1_5/eval_7b_lora/textvqa.sh
+CUDA_VISIBLE_DEVICES=7 bash scripts/v1_5/eval_7b_lora/textvqa.sh
 ```
 
 ### 3.3 MME ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=2 bash scripts/v1_5/eval_7b_lora/mme.sh
+CUDA_VISIBLE_DEVICES=6 bash scripts/v1_5/eval_7b_lora/mme.sh
 ```
 
 ### 3.4 ScienceQA ⭐ 本地出分 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=3 bash scripts/v1_5/eval_7b_lora/sqa.sh
+CUDA_VISIBLE_DEVICES=5 bash scripts/v1_5/eval_7b_lora/sqa.sh
 ```
 
 ### 3.5 GQA ⭐ 本地出分（多卡） 1
@@ -123,10 +123,10 @@ CUDA_VISIBLE_DEVICES=3 bash scripts/v1_5/eval_7b_lora/sqa.sh
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/gqa.sh
 ```
 
-### 3.6 SEED-Bench ⭐ 本地出分（多卡）(to be continued)
+### 3.6 SEED-Bench ⭐ 本地出分（多卡）image
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/seed.sh
+CUDA_VISIBLE_DEVICES=0,1,2,3 bash scripts/v1_5/eval_7b_lora/seed.sh
 ```
 
 ### 3.7 VQAv2（多卡 → 在线提交） 1
@@ -139,18 +139,34 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash scripts/v1_5/eval_7b_lora/vqav2.sh
 ### 3.8 VisWiz（单卡 → 在线提交） 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=3 bash scripts/v1_5/eval_7b_lora/vizwiz.sh
+CUDA_VISIBLE_DEVICES=7 bash scripts/v1_5/eval_7b_lora/vizwiz.sh
 # 提交到: https://eval.ai/web/challenges/challenge-page/2185/my-submission
 ```
 
-### 3.9 MMBench / MMBench-CN（单卡 → 在线提交） 12
+### 3.9 MMBench / MMBench-CN（单卡 → 在线提交） 1.2
 
-```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmbench.sh
-CUDA_VISIBLE_DEVICES=2 bash scripts/v1_5/eval_7b_lora/mmbench_cn.sh
+<!-- ```bash
+CUDA_VISIBLE_DEVICES=6 bash scripts/v1_5/eval_7b_lora/mmbench.sh
+CUDA_VISIBLE_DEVICES=5 bash scripts/v1_5/eval_7b_lora/mmbench_cn.sh
 # 提交到: https://opencompass.org.cn/leaderboard-multimodal
+``` -->
+修改VLMEvalKit/vlmeval/config.py里模型权重。约1020行处
+``` python
+    "llava_v1.5_7b": partial(vlm.LLaVA, model_path="/home/lgq/data/LLaVA/checkpoints/llava-v1.5-7b-lora-8-20260624-merged"),
 ```
-
+直接使用VLMEvalKit评估，可以多卡：
+```bash
+CUDA_VISIBLE_DEVICES=0 python run.py --data MMBench_DEV_EN --model llava_v1.5_7b --work-dir ./results_llava --verbose
+CUDA_VISIBLE_DEVICES=0,1 python run.py --data MMBench_DEV_CN --model llava_v1.5_7b --work-dir ./results_llava_cn --verbose
+```
+查看分数：
+```bash
+python -c '
+import pandas as pd
+df = pd.read_csv("./results_llava/llava_v1.5_7b/llava_v1.5_7b_MMBench_DEV_EN.csv")  # 可能文件名略有不同
+print(df[["Category", "Overall"]].tail(10))
+'
+```
 ### 3.10 LLaVA-Bench-in-the-Wild（GPT-4 打分）
 
 ```bash
@@ -160,7 +176,7 @@ OPENAI_API_KEY="sk-****" bash scripts/v1_5/eval_7b_lora/llavabench.sh
 ### 3.11 MM-Vet（Jupyter 打分） 1
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval_7b_lora/mmvet.sh
+CUDA_VISIBLE_DEVICES=4 bash scripts/v1_5/eval_7b_lora/mmvet.sh
 # 然后用 MM-Vet 官方 jupyter notebook 打开打分:
 # ./playground/data/eval/mm-vet/results/llava-v1.5-7b-lora.json
 ```
